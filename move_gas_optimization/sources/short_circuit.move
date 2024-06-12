@@ -12,7 +12,7 @@ module move_gas_optimization::short_circuit {
 
     public fun cheap_function(): bool {
         let mut k:u64 = 0;
-        while (k < 100) {
+        while (k < 1000) {
             k = k + 1;
         };
         let b: bool = (k == 0);
