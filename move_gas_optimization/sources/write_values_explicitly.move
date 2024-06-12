@@ -11,12 +11,12 @@ module move_gas_optimization::write_values_explicitly {
     }
 
     public entry fun calculate() {
-        let x: u128 = sum(10000);
+        let _x: u128 = sum(10000);
     }
 
 
     public entry fun explicit() {
-        let x: u128 = 50005000;
+        let _x: u128 = 50005000;
     }
 
 }
