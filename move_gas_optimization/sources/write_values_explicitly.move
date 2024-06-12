@@ -20,7 +20,7 @@ module move_gas_optimization::write_values_explicitly {
         helper(_x);
     }
 
-
+    //Doesn't work 
     public entry fun explicit() {
         let x: u128 = 49999999999999995000000000000000;
         
