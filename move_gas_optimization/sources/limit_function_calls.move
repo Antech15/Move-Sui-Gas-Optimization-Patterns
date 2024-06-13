@@ -2,7 +2,6 @@ module move_gas_optimization::limit_function_calls {
    
 
    public fun helper_function() {
-
     }
 
 
@@ -22,6 +21,4 @@ module move_gas_optimization::limit_function_calls {
             k = k + 1;
         };
     }
-
-
 }

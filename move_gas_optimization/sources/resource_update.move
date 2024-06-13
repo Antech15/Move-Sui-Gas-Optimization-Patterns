@@ -1,4 +1,4 @@
-module move_gas_optimization::resource_update {
+module move_gas_optimization::object_update {
 
     public struct MyObject has key, store {
         id: UID,
@@ -39,7 +39,7 @@ module move_gas_optimization::resource_update {
     }
     
 
-    public entry fun bad_object_update(object: &mut MyObject, new_value: u8) {
+    public entry fun bad_object_update(object: &mut MyObject, new_value: u8, ctx: &mut TxContext) {
         
         // destruct
         let MyObject {
@@ -57,7 +57,7 @@ module move_gas_optimization::resource_update {
 
         // create new object
         let new_object = MyObject {
-            id, //doesn't work
+            id: object::new(ctx),
             a: *a,
             b: *b,
             c: *c,
@@ -69,7 +69,8 @@ module move_gas_optimization::resource_update {
             z: *z
         };
 
-            *object = new_object; //requires drop ability
+        transfer::share_object(new_object);        
+
     }
 
 
