@@ -40,44 +40,41 @@ module move_gas_optimization::resource_update {
     
 
     public entry fun bad_object_update(object: &mut MyObject, new_value: u8) {
-        // destroy
+        
+        // destruct
         let MyObject {
-            id:object.id,
-            a:a,
-            b:b,
-            c:c,
-            d:d,
-            vec: vec,
-            w:w,
-            x:_,
-            y:y,
-            z:z
-        }
+            id,
+            a,
+            b,
+            c,
+            d,
+            vec,
+            w,
+            x: _,
+            y,
+            z
+        } = object;
 
-        // create new resource
-        let object = MyObject {
-            id:id,
-            a:a,
-            b:b,
-            c:c,
-            d:d,
-            vec: vec,
-            w:w,
-            x:new_value,
-            y:y,
-            z:z
+        // create new object
+        let new_object = MyObject {
+            id, //doesn't work
+            a: *a,
+            b: *b,
+            c: *c,
+            d: *d,
+            vec: *vec,
+            w: *w,
+            x: new_value,
+            y: *y,
+            z: *z
         };
 
-            transfer::share_object(object)
+            *object = new_object; //requires drop ability
     }
 
 
-    //aptos move run --function-id 'default::resource_update::good_resource_update' --args 'u8:1'
-    public entry fun good_resource_update(account: &signer, new_value: u8) 
-    acquires MyResource{
-        let resource = borrow_global_mut<MyResource>(signer::address_of(account));
-        resource.x = new_value;
+    public entry fun good_object_update(object: &mut MyObject, new_value: u8) {
+        object.x = new_value;
     }
-    // 120 Octa
 
 }
