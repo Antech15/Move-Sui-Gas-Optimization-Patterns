@@ -41,9 +41,8 @@ module move_gas_optimization::object_update {
 
     public entry fun bad_object_update(object: &mut MyObject, new_value: u8, ctx: &mut TxContext) {
         
-        // destruct
         let MyObject {
-            id,
+            id: _,
             a,
             b,
             c,
