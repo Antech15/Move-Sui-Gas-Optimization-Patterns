@@ -56,6 +56,5 @@ module move_gas_optimization::variable_packing {
             k = k + 1;
         };
     }
-    // 630 Octa
 
 }
