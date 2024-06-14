@@ -41,40 +41,52 @@ module move_gas_optimization::object_update {
 
     public entry fun bad_object_update(object: &mut MyObject, new_value: u8, ctx: &mut TxContext) {
         
-        let MyObject {
-            id: _,
-            a,
-            b,
-            c,
-            d,
-            vec,
-            w,
-            x: _,
-            y,
-            z
-        } = object;
+        let mut k:u64 = 0;
+        //will be intermidiate object
+        let mut result = object;
 
-        // create new object
-        let new_object = MyObject {
-            id: object::new(ctx),
-            a: *a,
-            b: *b,
-            c: *c,
-            d: *d,
-            vec: *vec,
-            w: *w,
-            x: new_value,
-            y: *y,
-            z: *z
+        while (k < 10) {
+
+            let MyObject {
+                id: _,
+                a,
+                b,
+                c,
+                d,
+                vec,
+                w,
+                x: _,
+                y,
+                z
+            } = result;
+
+            // create new object
+            let result = MyObject {
+                id: object::new(ctx),
+                a: *a,
+                b: *b,
+                c: *c,
+                d: *d,
+                vec: *vec,
+                w: *w,
+                x: new_value,
+                y: *y,
+                z: *z
+            };
+
+            k = k + 1;
+            transfer::share_object(result);        
         };
-
-        transfer::share_object(new_object);        
 
     }
 
 
     public entry fun good_object_update(object: &mut MyObject, new_value: u8) {
-        object.x = new_value;
+        let mut k:u64 = 0;
+        while (k < 10) {
+            object.x = new_value;
+            k = k + 1;
+        };
     }
 
 }

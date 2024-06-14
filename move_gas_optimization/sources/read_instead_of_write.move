@@ -8,7 +8,7 @@ module move_gas_optimization::read_instead_of_write {
         d:u128,
         vec: vector<u64>,
         w:u8,
-        x:u8,
+        x:u64,
         y:u8,
         z:u8
     }
@@ -40,10 +40,11 @@ module move_gas_optimization::read_instead_of_write {
 
     public entry fun reading(object: &mut MyObject) {
         let mut k:u64 = 0;
+        let mut _x1:u64 = 10;
         while (k < 1000) {
             let mut _x:u8;
-            _x = object.x;
-            k = k + 1;
+            _x1 = object.x;
+            k = k + _x1;
         };
 
         
@@ -52,9 +53,10 @@ module move_gas_optimization::read_instead_of_write {
 
     public entry fun writing(object: &mut MyObject) {
         let mut k:u64 = 0;
+        let x1:u64 = 10;
         while (k < 1000) {
-            object.x = 1;
-            k = k + 1;
+            object.x = x1;
+            k = k + x1;
         };
     }
 
