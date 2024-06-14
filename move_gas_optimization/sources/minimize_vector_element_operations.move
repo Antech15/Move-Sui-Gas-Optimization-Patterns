@@ -11,7 +11,7 @@ module move_gas_optimization::minimize_vector_element_operations {
 
         k = 0;
 
-        while (k < 100000) {
+        while (k < 10000) {
             k = k + *vector::borrow(&vec, 0);
             k = k + *vector::borrow(&vec, 1);
             k = k + *vector::borrow(&vec, 2);
@@ -34,7 +34,7 @@ module move_gas_optimization::minimize_vector_element_operations {
         let increment2:u256 = *vector::borrow(&vec, 1);
         let increment3:u256 = *vector::borrow(&vec, 2);
 
-        while (k < 100000) {
+        while (k < 10000) {
             k = k + increment1;
             k = k + increment2;
             k = k + increment3
