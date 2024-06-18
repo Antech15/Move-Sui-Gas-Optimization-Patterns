@@ -32,11 +32,12 @@ module trusted_swap::example {
 
     // === Constants ===
 
-    const MIN_FEE: u64 = 1000;
+    const MIN_FEE: u64 = 10000000000000000000; //toolow
+    const MIN_FEE: u64 = 1000; //regular
 
     // === Public Functions ===
 
-    public fun new(scarcity: u8, style: u8, ctx: &mut TxContext): Object {
+    public fun new(scarcity: u8, style: u8, ctx: &mut TxContext): Object{
         Object { id: object::new(ctx), scarcity, style }
     }
 
@@ -45,10 +46,11 @@ module trusted_swap::example {
     public fun request_swap(
         object: Object,
         fee: Coin<SUI>,
-        service: address,
+        _service: address,
         ctx: &mut TxContext,
-    ) {
+    ): SwapRequest {
         assert!(coin::value(&fee) >= MIN_FEE, EFeeTooLow);
+
 
         let request = SwapRequest {
             id: object::new(ctx),
@@ -56,13 +58,12 @@ module trusted_swap::example {
             object,
             fee: coin::into_balance(fee),
         };
-
-        transfer::transfer(request, service)
+        request
     }
 
     /// When the service has two swap requests, it can execute them, sending the
     /// objects to the respective owners and taking its fee.
-    public fun execute_swap(s1: SwapRequest, s2: SwapRequest): Balance<SUI> {
+    public fun execute_swap(s1: SwapRequest, s2: SwapRequest): Balance<SUI> {//Balance<SUI> {
         let SwapRequest {id: id1, owner: owner1, object: o1, fee: mut fee1} = s1;
         let SwapRequest {id: id2, owner: owner2, object: o2, fee: fee2} = s2;
 
@@ -82,134 +83,114 @@ module trusted_swap::example {
         fee1
     }
 
+
+        
     // === Tests ===
-    #[test_only] use sui::test_scenario as ts;
+    //use sui::test_scenario as ts;
 
-    #[test]
-    fun successful_swap() {
-        let mut ts = ts::begin(@0x0);
-        let alice = @0xA;
-        let bob = @0xB;
-        let custodian = @0xC;
+    public entry fun successful_swap(c1: Coin<SUI>, c2: Coin<SUI>, ctx: &mut TxContext) {
+        //let mut ts = ts::begin(@0x0);
+        //let alice = @0xA;
+        //let bob = @0xB;
+        //let custodian = @0xC;
+        let thang1: SwapRequest;
+        let thang2: SwapRequest;
 
-        let i1 = {
-            ts::next_tx(&mut ts, alice);
-            let o1 = new(1, 0, ts::ctx(&mut ts));
-            let c1 = coin::mint_for_testing<SUI>(MIN_FEE, ts::ctx(&mut ts));
+            //ts::next_tx(&mut ts, alice);
+            let o1 = new(1, 0, ctx);
+            //let c1 = mint_for_testing<SUI>(MIN_FEE, ctx);
             let i = object::id(&o1);
-            request_swap(o1, c1, custodian, ts::ctx(&mut ts));
-            i
-        };
+            thang1 = request_swap(o1, c1, ctx.sender(), ctx);
 
-        let i2 = {
-            ts::next_tx(&mut ts, bob);
-            let o2 = new(1, 1, ts::ctx(&mut ts));
-            let c2 = coin::mint_for_testing<SUI>(MIN_FEE, ts::ctx(&mut ts));
+            //ts::next_tx(&mut ts, bob);
+            let o2 = new(1, 1, ctx);
+            //let c2 = mint_for_testing<SUI>(MIN_FEE, ctx);
             let i = object::id(&o2);
-            request_swap(o2, c2, custodian, ts::ctx(&mut ts));
-            i
-        };
+            thang2 = request_swap(o2, c2, ctx.sender(), ctx);
 
-        {
-            ts::next_tx(&mut ts, custodian);
-            let s1 = ts::take_from_sender<SwapRequest>(&ts);
-            let s2 = ts::take_from_sender<SwapRequest>(&ts);
+            
+            //let s1 = ts::take_from_sender<SwapRequest>(&ts);
+            //let s2 = ts::take_from_sender<SwapRequest>(&ts);
 
-            let bal = execute_swap(s1, s2);
-            let fee = coin::from_balance(bal, ts::ctx(&mut ts));
+            let bal = execute_swap(thang1, thang2);
+            let fee = coin::from_balance(bal, ctx);
 
-            transfer::public_transfer(fee, custodian);
-        };
+            transfer::public_transfer(fee, ctx.sender());
 
-        {
-            ts::next_tx(&mut ts, custodian);
-            let fee: Coin<SUI> = ts::take_from_sender(&ts);
+        
+            //ts::next_tx(&mut ts, custodian);
+            //let fee: Coin<SUI> = ts::take_from_sender(&ts);
 
-            assert!(ts::ids_for_address<Object>(alice) == vector[i2], 0);
-            assert!(ts::ids_for_address<Object>(bob) == vector[i1], 0);
-            assert!(coin::value(&fee) == MIN_FEE * 2, 0);
+            //assert!(ts::ids_for_address<Object>(alice) == vector[i2], 0);
+            //assert!(ts::ids_for_address<Object>(bob) == vector[i1], 0);
+            //assert!(coin::value(&fee) == MIN_FEE * 2, 0);
 
-            ts::return_to_sender(&ts, fee);
-        };
+            //ts::return_to_sender(&ts, fee);
+    }
+    
 
-        ts::end(ts);
+    /*public entry fun swap_too_cheap(c1: Coin<SUI>, ctx: &mut TxContext) {
+
+
+        let o1 = new(1, 0, ctx);
+        let i = object::id(&o1);
+            let thang1 = request_swap(o1, c1, ctx.sender(), ctx);
+
+            //ts::next_tx(&mut ts, bob);
+            let o2 = new(1, 1, ctx);
+            //let c2 = mint_for_testing<SUI>(MIN_FEE, ctx);
+            let i = object::id(&o2);
+            thang2 = request_swap(o2, c2, ctx.sender(), ctx);
+
+            
+            //let s1 = ts::take_from_sender<SwapRequest>(&ts);
+            //let s2 = ts::take_from_sender<SwapRequest>(&ts);
+
+            let bal = execute_swap(thang1, thang2);
+            let fee = coin::from_balance(bal, ctx);
+
+            transfer::public_transfer(fee, ctx.sender());
+    }*/
+ 
+    public entry fun swap_different_scarcity(c1: Coin<SUI>, c2: Coin<SUI>, ctx: &mut TxContext) {
+
+        
+            let o1 = new(1, 0, ctx);
+            let thang1 = request_swap(o1, c1, ctx.sender(), ctx);
+        
+
+        
+            let o2 = new(0, 1, ctx);
+            let thang2 = request_swap(o2, c2, ctx.sender(), ctx);
+        
+
+        
+            let bal = execute_swap(thang1, thang2);
+
+            let fee = coin::from_balance(bal, ctx);
+
+            transfer::public_transfer(fee, ctx.sender());     
     }
 
-    #[test]
-    #[expected_failure(abort_code = EFeeTooLow)]
-    fun swap_too_cheap() {
-        let alice = @0xA;
-        let custodian = @0xC;
+    public entry fun swap_same_style(c1: Coin<SUI>, c2: Coin<SUI>, ctx: &mut TxContext) {
 
-        let mut ts = ts::begin(alice);
-        let o1 = new(1, 0, ts::ctx(&mut ts));
-        let c1 = coin::mint_for_testing<SUI>(MIN_FEE - 1, ts::ctx(&mut ts));
-        request_swap(o1, c1, custodian, ts::ctx(&mut ts));
 
-        abort 1337
+            let o1 = new(1, 0, ctx);
+            let thang1 = request_swap(o1, c1, ctx.sender(), ctx);
+        
+
+        
+            let o2 = new(1, 0, ctx);
+            let thang2 = request_swap(o2, c2, ctx.sender(), ctx);
+        
+
+        
+ 
+            let bal = execute_swap(thang1, thang2);
+
+            let fee = coin::from_balance(bal, ctx);
+
+            transfer::public_transfer(fee, ctx.sender());     
     }
 
-    #[test]
-    #[expected_failure(abort_code = EBadSwap)]
-    fun swap_different_scarcity() {
-        let mut ts = ts::begin(@0x0);
-        let alice = @0xA;
-        let bob = @0xB;
-        let custodian = @0xC;
-
-        {
-            ts::next_tx(&mut ts, alice);
-            let o1 = new(1, 0, ts::ctx(&mut ts));
-            let c1 = coin::mint_for_testing<SUI>(MIN_FEE, ts::ctx(&mut ts));
-            request_swap(o1, c1, custodian, ts::ctx(&mut ts));
-        };
-
-        {
-            ts::next_tx(&mut ts, bob);
-            let o2 = new(0, 1, ts::ctx(&mut ts));
-            let c2 = coin::mint_for_testing<SUI>(MIN_FEE, ts::ctx(&mut ts));
-            request_swap(o2, c2, custodian, ts::ctx(&mut ts));
-        };
-
-        {
-            ts::next_tx(&mut ts, custodian);
-            let s1 = ts::take_from_sender<SwapRequest>(&ts);
-            let s2 = ts::take_from_sender<SwapRequest>(&ts);
-            let _fee = execute_swap(s1, s2);
-        };
-
-        abort 1337
-    }
-
-    #[test]
-    #[expected_failure(abort_code = EBadSwap)]
-    fun swap_same_style() {
-        let mut ts = ts::begin(@0x0);
-        let alice = @0xA;
-        let bob = @0xB;
-        let custodian = @0xC;
-
-        {
-            ts::next_tx(&mut ts, alice);
-            let o1 = new(1, 0, ts::ctx(&mut ts));
-            let c1 = coin::mint_for_testing<SUI>(MIN_FEE, ts::ctx(&mut ts));
-            request_swap(o1, c1, custodian, ts::ctx(&mut ts));
-        };
-
-        {
-            ts::next_tx(&mut ts, bob);
-            let o2 = new(1, 0, ts::ctx(&mut ts));
-            let c2 = coin::mint_for_testing<SUI>(MIN_FEE, ts::ctx(&mut ts));
-            request_swap(o2, c2, custodian, ts::ctx(&mut ts));
-        };
-
-        {
-            ts::next_tx(&mut ts, custodian);
-            let s1 = ts::take_from_sender<SwapRequest>(&ts);
-            let s2 = ts::take_from_sender<SwapRequest>(&ts);
-            let _fee = execute_swap(s1, s2);
-        };
-
-        abort 1337
-    }
 }

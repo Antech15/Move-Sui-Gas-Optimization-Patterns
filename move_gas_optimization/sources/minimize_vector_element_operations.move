@@ -36,8 +36,8 @@ module move_gas_optimization::minimize_vector_element_operations {
 
         while (k < 10000) {
             k = k + increment1;
-            k = k + increment2;
-            k = k + increment3
+            //k = k + increment2;
+            //k = k + increment3
         };
     }
 
