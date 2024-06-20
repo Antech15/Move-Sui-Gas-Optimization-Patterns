@@ -56,7 +56,6 @@ module move_gas_optimization::object_update {
                 z
             } = result;
 
-            // create new object
             let result = MyObject {
                 id: object::new(ctx),
                 a: *a,
