@@ -20,7 +20,7 @@ module move_gas_optimization::variable_packing {
                 x24: 1
             };
 
-            transfer::share_object(object);
+        transfer::share_object(object);
     }
 
 
