@@ -22,7 +22,6 @@ module move_gas_optimization::operate_on_local_variables {
             }
     }
 
-
     public entry fun good_object_write(object: &mut MyObject) {
         object.value = 0;
         let mut intermediate = object.value;
@@ -33,5 +32,4 @@ module move_gas_optimization::operate_on_local_variables {
         };
         object.value = intermediate;
     }
-
 }
