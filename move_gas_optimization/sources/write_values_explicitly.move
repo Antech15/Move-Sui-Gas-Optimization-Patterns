@@ -26,5 +26,4 @@ module move_gas_optimization::write_values_explicitly {
         helper(x);
 
     }
-
 }
