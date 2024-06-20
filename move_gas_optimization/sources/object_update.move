@@ -13,7 +13,6 @@ module move_gas_optimization::object_update {
         z:u8
     }
 
-
     public entry fun create_object(ctx: &mut TxContext) {
         let mut vec = vector::empty<u64>();
         let mut k:u64 = 0;
@@ -38,7 +37,6 @@ module move_gas_optimization::object_update {
         transfer::share_object(object)
     }
     
-
     public entry fun bad_object_update(object: &mut MyObject, new_value: u8, ctx: &mut TxContext) {
         
         let mut k:u64 = 0;
@@ -77,7 +75,6 @@ module move_gas_optimization::object_update {
             k = k + 1;
             transfer::share_object(result);        
         };
-
     }
 
 
@@ -88,5 +85,4 @@ module move_gas_optimization::object_update {
             k = k + 1;
         };
     }
-
 }
