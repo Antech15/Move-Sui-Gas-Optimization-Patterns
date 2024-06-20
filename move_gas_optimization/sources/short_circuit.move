@@ -8,7 +8,6 @@ module move_gas_optimization::short_circuit {
         let b: bool = (k == 0);
         b
     }
-    // always returns False
 
     public fun cheap_function(): bool {
         let mut k:u64 = 0;
@@ -18,7 +17,6 @@ module move_gas_optimization::short_circuit {
         let b: bool = (k == 0);
         b
     }
-    // always returns False
 
 
     public entry fun no_short_circuit() {
@@ -33,5 +31,4 @@ module move_gas_optimization::short_circuit {
 
         };
     }
-
 }
