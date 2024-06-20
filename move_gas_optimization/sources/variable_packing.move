@@ -30,7 +30,7 @@ module move_gas_optimization::variable_packing {
                 x: 1
             };
 
-            transfer::share_object(object);
+        transfer::share_object(object);
     }
 
     public entry fun no_variable_packing(object: &mut MyObject) {
