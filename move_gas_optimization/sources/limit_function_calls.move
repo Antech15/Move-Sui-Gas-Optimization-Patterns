@@ -2,10 +2,6 @@ module move_gas_optimization::limit_function_calls {
    
 
    public fun helper_function() {
-        let mut j:u64 = 0;
-        while (j < 10) {
-            j = j + 1;
-        };
     }
 
 

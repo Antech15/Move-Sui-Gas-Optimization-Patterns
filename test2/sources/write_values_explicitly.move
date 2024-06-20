@@ -15,13 +15,13 @@ module test2::write_values_explicitly {
     }
 
     public entry fun calculate() {
-        let _x: u128 = sum(100000);
+        let _x: u128 = sum(10000);
 
         helper(_x);
     }
 
     public entry fun explicit() {
-        let x: u128 = 5000050000;
+        let x: u128 = 50005000;
         
         helper(x);
 
