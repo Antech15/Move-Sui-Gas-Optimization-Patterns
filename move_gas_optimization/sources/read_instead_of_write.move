@@ -13,7 +13,6 @@ module move_gas_optimization::read_instead_of_write {
         z:u8
     }
 
-
     public entry fun create_object(ctx: &mut TxContext) {
         let mut vec = vector::empty<u64>();
         let mut k:u64 = 0;
@@ -46,9 +45,6 @@ module move_gas_optimization::read_instead_of_write {
             _x1 = object.x;
             k = k + _x1;
         };
-
-        
-
     }
 
     public entry fun writing(object: &mut MyObject) {
@@ -59,5 +55,4 @@ module move_gas_optimization::read_instead_of_write {
             k = k + x1;
         };
     }
-
 }
