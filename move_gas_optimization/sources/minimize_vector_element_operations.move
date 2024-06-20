@@ -18,7 +18,6 @@ module move_gas_optimization::minimize_vector_element_operations {
         };
     }
 
-
     public entry fun good_vector_access() {
         let mut vec = vector::empty<u256>();
 
@@ -40,5 +39,4 @@ module move_gas_optimization::minimize_vector_element_operations {
             k = k + increment3;
         };
     }
-
 }
