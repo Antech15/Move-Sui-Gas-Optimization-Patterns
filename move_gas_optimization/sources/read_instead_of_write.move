@@ -34,7 +34,7 @@ module move_gas_optimization::read_instead_of_write {
                 z:10
             };
 
-            transfer::share_object(object)
+            transfer::transfer(object, tx_context::sender(ctx));
     }
 
     public entry fun reading(object: &mut MyObject) {

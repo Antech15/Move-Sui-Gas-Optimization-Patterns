@@ -11,7 +11,7 @@ module move_gas_optimization::operate_on_local_variables {
                 value: 1
             };
 
-        transfer::share_object(object)
+        transfer::transfer(object, tx_context::sender(ctx));
     }
 
     public entry fun bad_object_write(object: &mut MyObject) {

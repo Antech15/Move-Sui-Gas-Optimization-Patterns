@@ -34,12 +34,12 @@ module move_gas_optimization::object_update {
                 z:10
             };
 
-        transfer::share_object(object)
+        transfer::transfer(object, tx_context::sender(ctx));
     }
     
     public entry fun bad_object_update(object: &mut MyObject, new_value: u8, ctx: &mut TxContext) {
         let mut k:u64 = 0;
-        let mut result = object;
+        let result = object;
 
         while (k < 10) {
 
@@ -70,7 +70,7 @@ module move_gas_optimization::object_update {
             };
 
             k = k + 1;
-            transfer::share_object(result);        
+            transfer::transfer(result, tx_context::sender(ctx));     
         };
     }
 
