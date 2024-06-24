@@ -37,41 +37,37 @@ module move_gas_optimization::object_update {
         transfer::transfer(object, tx_context::sender(ctx));
     }
     
-    public entry fun bad_object_update(object: &mut MyObject, new_value: u8, ctx: &mut TxContext) {
-        let mut k:u64 = 0;
-        let result = object;
+    public entry fun bad_object_update(object: MyObject, new_value: u8, ctx: &mut TxContext) {
 
-        while (k < 10) {
+        let MyObject {
+            id,
+            a,
+            b,
+            c,
+            d,
+            vec,
+            w,
+            x: _,
+            y,
+            z
+        } = object;
 
-            let MyObject {
-                id: _,
-                a,
-                b,
-                c,
-                d,
-                vec,
-                w,
-                x: _,
-                y,
-                z
-            } = result;
+        id.delete();
 
-            let result = MyObject {
-                id: object::new(ctx),
-                a: *a,
-                b: *b,
-                c: *c,
-                d: *d,
-                vec: *vec,
-                w: *w,
-                x: new_value,
-                y: *y,
-                z: *z
-            };
-
-            k = k + 1;
-            transfer::transfer(result, tx_context::sender(ctx));     
+        let new_object = MyObject {
+            id: object::new(ctx),
+            a: a,
+            b: b,
+            c: c,
+            d: d,
+            vec: vec,
+            w: w,
+            x: new_value,
+            y: y,
+            z: z
         };
+
+        transfer::transfer(new_object, tx_context::sender(ctx)); //result is moved here so no longer available (result variable is empty and useless)
     }
 
 
