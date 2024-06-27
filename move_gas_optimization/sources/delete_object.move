@@ -41,15 +41,15 @@ module move_gas_optimization::delete_object {
 
         let MyObject {
             id,
-            a,
-            b,
-            c,
-            d,
-            vec,
-            w,
+            a: _,
+            b: _,
+            c: _,
+            d: _,
+            vec: _,
+            w: _,
             x: _,
-            y,
-            z
+            y: _,
+            z: _
         } = object;
 
         id.delete();
