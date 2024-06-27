@@ -73,6 +73,5 @@ module move_gas_optimization::object_update {
 
     public entry fun good_object_update(object: &mut MyObject, new_value: u8) {
         object.x = new_value;
-        k = k + 1;
     }
 }
