@@ -1,4 +1,4 @@
-module move_gas_optimization::read_and_write {
+module move_gas_optimization::read_one_vs_read_four {
 
     public struct MyObject has key, store {
         id: UID,
@@ -12,9 +12,7 @@ module move_gas_optimization::read_and_write {
         y:u8,
         z:u8
     }
-    public fun helper_function(num: u128): u128 {
-        num
-    }
+
 
     public entry fun create_object(ctx: &mut TxContext) {
         let mut vec = vector::empty<u64>();
@@ -50,18 +48,43 @@ module move_gas_optimization::read_and_write {
             k = k + 1;
         };
 
-        helper_function(temp);
     }
 
     //#[allow(unused_assignment)] //compiler thinks x1 isn't used for some reason
     public entry fun read_four_fields(object: &mut MyObject) {
+        let mut k:u64 = 0;
         let mut temp:u128 = 0;
 
-        temp = temp + object.a;
-        temp = temp + object.b;
-        temp = temp + object.c;
-        temp = temp + object.d;
+        while(k < 10000) {
+            temp = temp + object.a;
+            temp = temp + object.b;
+            temp = temp + object.c;
+            temp = temp + object.d;
+            k = k + 1;
+        };
 
-        helper_function(temp);
     }
+
+    //#[allow(unused_assignment)] //compiler thinks x1 isn't used for some reason
+    public entry fun write_one_field(object: &mut MyObject) {
+        let mut k:u64 = 0;
+        let y: u128 = 0;
+
+        while (k < 10000) {
+            object.b = y;
+            k = k + 1;
+        };
+    }
+
+    //#[allow(unused_assignment)] //compiler thinks x1 isn't used for some reason
+    public entry fun write_four_fields(object: &mut MyObject) {
+        let  y: u128 = 0;
+
+        object.a = y;
+        object.b = y;
+        object.c = y;
+        object.d = y;
+
+    }
+
 }
