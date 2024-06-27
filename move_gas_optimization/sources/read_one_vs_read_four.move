@@ -52,6 +52,17 @@ module move_gas_optimization::read_one_vs_read_four {
 
     //#[allow(unused_assignment)] //compiler thinks x1 isn't used for some reason
     public entry fun read_four_fields(object: &mut MyObject) {
+        let mut temp:u128 = 0;
+
+        temp = temp + object.a;
+        temp = temp + object.b;
+        temp = temp + object.c;
+        temp = temp + object.d;
+
+    }
+
+    //#[allow(unused_assignment)] //compiler thinks x1 isn't used for some reason
+    public entry fun read_four_fields2(object: &mut MyObject) {
         let mut k:u64 = 0;
         let mut temp:u128 = 0;
 
