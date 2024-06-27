@@ -43,6 +43,37 @@ module move_gas_optimization::limit_function_calls2 {
         };
     }
 
+    public entry fun function_call6() {
+        let mut k:u64 = 0;
+        while (k < 8500) {
+            helper_function();
+            k = k + 1;
+        };
+    }
+
+    public entry fun function_call7() {
+        let mut k:u64 = 0;
+        while (k < 9000) {
+            helper_function();
+            k = k + 1;
+        };
+    }
+    
+    public entry fun function_call8() {
+        let mut k:u64 = 0;
+        while (k < 9500) {
+            helper_function();
+            k = k + 1;
+        };
+    }
+
+    public entry fun function_call9() {
+        let mut k:u64 = 0;
+        while (k < 9250) {
+            helper_function();
+            k = k + 1;
+        };
+    }
 }
     
    
