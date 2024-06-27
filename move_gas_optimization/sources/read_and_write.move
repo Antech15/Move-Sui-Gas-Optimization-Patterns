@@ -43,19 +43,25 @@ module move_gas_optimization::read_and_write {
     //#[allow(unused_assignment)] //compiler thinks x1 isn't used for some reason
     public entry fun read_one_field(object: &mut MyObject) {
         let mut k:u64 = 0;
+        let mut temp:u128 = 0;
 
         while (k < 10000) {
-            helper_function(object.b);
+            temp = temp + object.b;
             k = k + 1;
         };
+
+        helper_function(temp);
     }
 
     //#[allow(unused_assignment)] //compiler thinks x1 isn't used for some reason
     public entry fun read_four_fields(object: &mut MyObject) {
+        let mut temp:u128 = 0;
 
-        helper_function(object.a);
-        helper_function(object.b);
-        helper_function(object.c);
-        helper_function(object.d);
+        temp = temp + object.a;
+        temp = temp + object.b;
+        temp = temp + object.c;
+        temp = temp + object.d;
+
+        helper_function(temp);
     }
 }
