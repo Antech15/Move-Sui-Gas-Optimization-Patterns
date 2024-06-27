@@ -1,4 +1,4 @@
-module move_gas_optimization::read_instead_of_write {
+module move_gas_optimization::read_instead_of_write2 {
 
     public struct MyObject has key, store {
         id: UID,
@@ -11,6 +11,15 @@ module move_gas_optimization::read_instead_of_write {
         x:u64,
         y:u8,
         z:u8
+    }
+
+    public fun expensive_function(): bool {
+        let mut k:u64 = 0;
+        while (k < 100000) {
+            k = k + 1;
+        };
+        let b: bool = (k != 0);
+        b
     }
 
     public entry fun create_object(ctx: &mut TxContext) {
@@ -39,18 +48,22 @@ module move_gas_optimization::read_instead_of_write {
 
     #[allow(unused_assignment)] //compiler thinks x1 isn't used for some reason
     public entry fun reading(object: &mut MyObject) {
+        expensive_function();
+
         let mut k:u64 = 0;
         let mut x1:u64 = 10;
-        while (k < 1000) {
+        while (k < 100000) {
             x1 = object.x;
             k = k + x1;
         };
     }
 
     public entry fun writing(object: &mut MyObject) {
+        expensive_function();
+
         let mut k:u64 = 0;
         let x1:u64 = 10;
-        while (k < 1000) {
+        while (k < 100000) {
             object.x = x1;
             k = k + x1;
         };
