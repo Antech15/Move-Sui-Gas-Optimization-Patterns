@@ -64,7 +64,6 @@ module move_gas_optimization::read_one_vs_read_four {
         temp = temp + object.b;
         temp = temp + object.c;
         temp = temp + object.d;
-
     }
 
     //#[allow(unused_assignment)] //compiler thinks x1 isn't used for some reason
@@ -79,7 +78,6 @@ module move_gas_optimization::read_one_vs_read_four {
             temp = temp + object.d;
             k = k + 1;
         };
-
     }
 
     //#[allow(unused_assignment)] //compiler thinks x1 isn't used for some reason
@@ -108,7 +106,6 @@ module move_gas_optimization::read_one_vs_read_four {
         object.b = y;
         object.c = y;
         object.d = y;
-
     }
 
     //#[allow(unused_assignment)] //compiler thinks x1 isn't used for some reason
@@ -125,7 +122,6 @@ module move_gas_optimization::read_one_vs_read_four {
 
             k = k + 1;
         };
-
     }
 
 }
