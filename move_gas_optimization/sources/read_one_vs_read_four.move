@@ -78,6 +78,13 @@ module move_gas_optimization::read_one_vs_read_four {
 
     //#[allow(unused_assignment)] //compiler thinks x1 isn't used for some reason
     public entry fun write_one_field(object: &mut MyObject) {
+        let y: u128 = 0;
+
+        object.b = y;
+    }
+
+    //#[allow(unused_assignment)] //compiler thinks x1 isn't used for some reason
+    public entry fun write_one_field2(object: &mut MyObject) {
         let mut k:u64 = 0;
         let y: u128 = 0;
 
@@ -95,6 +102,23 @@ module move_gas_optimization::read_one_vs_read_four {
         object.b = y;
         object.c = y;
         object.d = y;
+
+    }
+
+    //#[allow(unused_assignment)] //compiler thinks x1 isn't used for some reason
+    public entry fun write_four_fields2(object: &mut MyObject) {
+        let mut k:u64 = 0;
+        let  y: u128 = 0;
+
+        while (k < 10000) {
+
+            object.a = y;
+            object.b = y;
+            object.c = y;
+            object.d = y;
+
+            k = k + 1;
+        };
 
     }
 
