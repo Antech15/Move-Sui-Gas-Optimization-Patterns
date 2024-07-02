@@ -19,7 +19,7 @@ module move_gas_optimization::share_vs_transfer {
         object
     }
 
-    public entry fun create_1000_wrapped_shared(ctx: &mut TxContext) {
+    public entry fun create_2000_wrapped_shared(ctx: &mut TxContext) {
         let mut vec = vector::empty<MyObject>();
         let mut k:u64 = 0;
         while (k < 1000) {
@@ -35,7 +35,7 @@ module move_gas_optimization::share_vs_transfer {
         transfer::share_object(objects);
     }
 
-    public entry fun create_1000_wrapped_transferred(ctx: &mut TxContext) {
+    public entry fun create_2000_wrapped_transferred(ctx: &mut TxContext) {
         let mut vec = vector::empty<MyObject>();
         let mut k:u64 = 0;
         while (k < 1000) {
@@ -51,17 +51,17 @@ module move_gas_optimization::share_vs_transfer {
         transfer::transfer(objects, tx_context::sender(ctx));
     }
 
-    public entry fun share_1000(ctx: &mut TxContext) {
+    public entry fun share2000(ctx: &mut TxContext) {
         let mut k:u64 = 0;
-        while (k < 1000) {
+        while (k < 2000) {
             transfer::transfer(create_object(ctx), tx_context::sender(ctx));
             k = k + 1;
         };
     }
 
-    public entry fun transfer1000(ctx: &mut TxContext) {
+    public entry fun transfer2000(ctx: &mut TxContext) {
         let mut k:u64 = 0;
-        while (k < 1000) {
+        while (k < 2000) {
             transfer::share_object(create_object(ctx));
             k = k + 1;
         };
