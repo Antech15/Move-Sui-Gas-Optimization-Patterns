@@ -15,15 +15,15 @@ module move_gas_optimization::write_values_explicitly {
     }
 
     public entry fun calculate() {
-        let _x: u128 = sum(10000);
+        let x: u128 = sum(100000);
 
-        helper(_x);
+        //helper(x);
     }
 
     public entry fun explicit() {
         let x: u128 = 50005000;
         
-        helper(x);
+        //helper(x);
 
     }
 }
