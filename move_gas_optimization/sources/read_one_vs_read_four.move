@@ -123,5 +123,4 @@ module move_gas_optimization::read_one_vs_read_four {
             k = k + 1;
         };
     }
-
 }

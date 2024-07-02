@@ -59,6 +59,7 @@ module move_gas_optimization::share_vs_transfer {
         };
     }
 
+    #[allow(lint(share_owned))]
     public entry fun transfer2000(ctx: &mut TxContext) {
         let mut k:u64 = 0;
         while (k < 2000) {
