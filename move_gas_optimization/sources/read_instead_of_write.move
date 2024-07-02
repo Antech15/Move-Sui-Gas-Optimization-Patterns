@@ -41,7 +41,7 @@ module move_gas_optimization::read_instead_of_write {
     public entry fun reading(object: &mut MyObject) {
         let mut k:u64 = 0;
         let mut x1:u64 = 10;
-        while (k < 1000) {
+        while (k < 100000) {
             x1 = object.x;
             k = k + x1;
         };
@@ -50,7 +50,7 @@ module move_gas_optimization::read_instead_of_write {
     public entry fun writing(object: &mut MyObject) {
         let mut k:u64 = 0;
         let x1:u64 = 10;
-        while (k < 1000) {
+        while (k < 100000) {
             object.x = x1;
             k = k + x1;
         };

@@ -49,6 +49,8 @@ module move_gas_optimization::object_update2 {
     public entry fun bad_object_update(object: MyObject, new_value: u8, ctx: &mut TxContext) {
 
         expensive_function();
+        expensive_function();
+        expensive_function();
 
         let MyObject {
             id,
@@ -83,6 +85,8 @@ module move_gas_optimization::object_update2 {
 
 
     public entry fun good_object_update(object: &mut MyObject, new_value: u8) {
+        expensive_function();
+        expensive_function();
         expensive_function();
 
         object.x = new_value;
