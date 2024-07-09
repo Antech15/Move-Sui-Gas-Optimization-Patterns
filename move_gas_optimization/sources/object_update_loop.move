@@ -45,6 +45,10 @@ module move_gas_optimization::object_update_loop {
             new_object
     }
 
+    public fun helper_function2(object: &mut MyObject, new_value: u8) {
+        object.x = new_value;
+    }
+
     public entry fun create_object(ctx: &mut TxContext) {
         let mut vec = vector::empty<u64>();
         let mut k:u64 = 0;
@@ -87,7 +91,7 @@ module move_gas_optimization::object_update_loop {
     public entry fun good_object_update(object: &mut MyObject, new_value: u8) {
         let mut k:u64 = 0;
         while (k < 10000) {
-            object.x = new_value;
+            helper_function2(object, new_value);
             k = k + 1;
         }
     }

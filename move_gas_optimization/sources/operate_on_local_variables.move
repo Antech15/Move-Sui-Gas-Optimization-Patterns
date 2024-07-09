@@ -17,7 +17,7 @@ module move_gas_optimization::operate_on_local_variables {
     public entry fun bad_object_write(object: &mut MyObject) {
         object.value = 0;
 
-        while (object.value < 100000) {
+        while (object.value < 10000) {
             object.value = object.value + 1;
             }
     }
@@ -26,7 +26,7 @@ module move_gas_optimization::operate_on_local_variables {
         object.value = 0;
         let mut intermediate = object.value;
 
-        while (intermediate < 100000) {
+        while (intermediate < 10000) {
             intermediate = intermediate + 1;
         };
         object.value = intermediate;
