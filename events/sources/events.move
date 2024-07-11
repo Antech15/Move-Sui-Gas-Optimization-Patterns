@@ -41,7 +41,6 @@ module events::events {
 
 
 
-
     //no difference
     public entry fun transfer_event(ctx: &mut TxContext) {
         let id = object::new(ctx);
