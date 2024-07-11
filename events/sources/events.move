@@ -40,8 +40,9 @@ module events::events {
     }
 
 
-    //expensive?? function
-    
+
+
+    //no difference
     public entry fun transfer_event(ctx: &mut TxContext) {
         let id = object::new(ctx);
 
