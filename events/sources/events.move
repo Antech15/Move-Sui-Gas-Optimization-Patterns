@@ -30,7 +30,7 @@ module events::events {
         }
     }
 
-    //much higher fees
+    //much higher fees, different
     public entry fun transfer_event_loop(ctx: &mut TxContext) {
         let mut k:u64 = 0;
         while (k < 1024) {
@@ -38,10 +38,16 @@ module events::events {
             k = k + 1;
         }
     }
+    public entry fun transfer_no_event_loop(ctx: &mut TxContext) {
+        let mut k:u64 = 0;
+        while (k < 1024) {
+            transfer_no_event(ctx);
+            k = k + 1;
+        }
+    }
 
 
-
-    //no difference
+    //no difference in fees
     public entry fun transfer_event(ctx: &mut TxContext) {
         let id = object::new(ctx);
 
@@ -49,7 +55,6 @@ module events::events {
 
         transfer::transfer(MyObject { id, num: 10 }, ctx.sender())
     }
-
     public entry fun transfer_no_event(ctx: &mut TxContext) {
         let id = object::new(ctx);
 
