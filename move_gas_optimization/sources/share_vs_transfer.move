@@ -54,7 +54,7 @@ module move_gas_optimization::share_vs_transfer {
     public entry fun share2000(ctx: &mut TxContext) {
         let mut k:u64 = 0;
         while (k < 2000) {
-            transfer::transfer(create_object(ctx), tx_context::sender(ctx));
+            transfer::share_object(create_object(ctx));
             k = k + 1;
         };
     }
@@ -63,7 +63,7 @@ module move_gas_optimization::share_vs_transfer {
     public entry fun transfer2000(ctx: &mut TxContext) {
         let mut k:u64 = 0;
         while (k < 2000) {
-            transfer::share_object(create_object(ctx));
+            transfer::transfer(create_object(ctx), tx_context::sender(ctx));
             k = k + 1;
         };
     }
