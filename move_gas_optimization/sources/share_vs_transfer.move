@@ -68,4 +68,12 @@ module move_gas_optimization::share_vs_transfer {
         };
     }
 
+    public entry fun freeze2000(ctx: &mut TxContext) {
+        let mut k:u64 = 0;
+        while (k < 2000) {
+            transfer::freeze_object(create_object(ctx));
+            k = k + 1;
+        };
+    }
+
 }
