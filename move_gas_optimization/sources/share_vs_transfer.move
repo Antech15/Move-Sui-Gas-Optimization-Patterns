@@ -19,6 +19,17 @@ module move_gas_optimization::share_vs_transfer {
         object
     }
 
+    public entry fun create_object2(ctx: &mut TxContext) {
+        let object = MyObject {
+                id: object::new(ctx),
+                value: 1
+            };
+            //transfer::share_object(object);
+            //transfer::transfer(object, tx_context::sender(ctx));
+            transfer::freeze_object(object);
+    }
+
+
     public entry fun create_2000_wrapped_shared(ctx: &mut TxContext) {
         let mut vec = vector::empty<MyObject>();
         let mut k:u64 = 0;
