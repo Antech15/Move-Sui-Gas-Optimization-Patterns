@@ -1,4 +1,4 @@
-module move_gas_optimization::delete_operation {
+module move_gas_optimization::operations {
     use sui::dynamic_field;
     use sui::bag;
 
