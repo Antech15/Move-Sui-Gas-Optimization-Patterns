@@ -25,7 +25,35 @@ module move_gas_optimization::delete_operation {
         transfer::transfer(parent, tx_context::sender(ctx));
     }
 
-    public entry fun delete_parent(mut obj: Parent) {
+    public entry fun access(obj: &mut Parent) {
+        let bag_ref: &mut bag::Bag = dynamic_field::borrow_mut(&mut obj.id, b"bag");
+
+        let mut temp: &mut Child;
+
+        let mut k = 0;
+        while(k < 999) {
+            temp = bag::borrow_mut(bag_ref, k);
+
+            k = k + 1;
+        };
+    }
+
+    public entry fun update(obj: &mut Parent) {
+        let bag_ref: &mut bag::Bag = dynamic_field::borrow_mut(&mut obj.id, b"bag");
+
+        let mut temp: &mut Child;
+
+        let mut k = 0;
+        while(k < 999) {
+            temp = bag::borrow_mut(bag_ref, k);
+            
+            temp.num = 15;
+
+            k = k + 1;
+        };
+    }
+
+    public entry fun delete(mut obj: Parent) {
         let bag_ref: &mut bag::Bag = dynamic_field::borrow_mut(&mut obj.id, b"bag");
 
         let mut k = 0;
